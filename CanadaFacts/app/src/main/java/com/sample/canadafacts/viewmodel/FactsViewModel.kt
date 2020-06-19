@@ -1,12 +1,10 @@
 package com.sample.canadafacts.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.sample.canadafacts.retrofit.RetrofitService
 import com.sample.canadafacts.model.FactsResponseModel
+import com.sample.canadafacts.retrofit.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,6 +12,9 @@ import retrofit2.Response
 class FactsViewModel(application: Application) : AndroidViewModel(application) {
     var factsLiveData: MutableLiveData<FactsResponseModel>? = null
 
+    /**
+     *  Get facts list
+     */
     fun getFacts(): MutableLiveData<FactsResponseModel> {
         factsLiveData = MutableLiveData()
         val factsUrl = "s/2iodh4vg0eortkl/facts.json"

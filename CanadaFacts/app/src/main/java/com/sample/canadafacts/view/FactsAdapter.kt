@@ -2,7 +2,6 @@ package com.sample.canadafacts.view
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,6 @@ import com.sample.canadafacts.R
 import com.sample.canadafacts.databinding.FactsItemBinding
 import com.sample.canadafacts.model.FactsResponseModel
 import com.sample.canadafacts.util.ImageUtils
-import kotlinx.android.synthetic.main.facts_item.view.*
 
 class FactsAdapter(
     var movieList: ArrayList<FactsResponseModel.Row>,
@@ -33,7 +31,7 @@ class FactsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(factsModel: FactsResponseModel.Row, context: Context) {
             binding.tvTitle.text = factsModel.title ?: ""
-            binding.tvDescription.text = factsModel.description?: ""
+            binding.tvDescription.text = factsModel.description ?: ""
             ImageUtils.setFactsImage(
                 factsModel.imageHref,
                 binding.imgFacts,
