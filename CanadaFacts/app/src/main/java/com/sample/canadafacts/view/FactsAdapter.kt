@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.canadafacts.R
+import com.sample.canadafacts.databinding.FactsItemBinding
 import com.sample.canadafacts.model.FactsResponseModel
 import com.sample.canadafacts.util.ImageUtils
 import kotlinx.android.synthetic.main.facts_item.view.*
@@ -13,28 +15,30 @@ import kotlinx.android.synthetic.main.facts_item.view.*
 class FactsAdapter(
     var movieList: ArrayList<FactsResponseModel.Row>,
     val context: Context
-) : RecyclerView.Adapter<FactsAdapter.PopularViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int) = PopularViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.facts_item, parent, false)
-    )
+) : RecyclerView.Adapter<FactsAdapter.FactsViewHolder>() {
+    private lateinit var mBinding: FactsItemBinding
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): FactsViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        mBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.facts_item, parent, false)
+        return FactsViewHolder(mBinding)
+    }
 
     override fun getItemCount() = movieList.size
-    override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FactsViewHolder, position: Int) {
         holder.bind(movieList[position], context)
     }
 
-    inner class PopularViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val tvTitle = view.tvTitle
-        private val tvDate = view.tvDescription
-        private val imgPopularMovie = view.imgFacts
+    inner class FactsViewHolder(val binding: FactsItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(factsModel: FactsResponseModel.Row, context: Context) {
-            factsModel.title?.let { tvTitle.text = factsModel.title}
-            factsModel.description?.let {  tvDate.text = factsModel.description}
-            factsModel.imageHref?.let { ImageUtils.setFactsImage(
+            binding.tvTitle.text = factsModel.title ?: ""
+            binding.tvDescription.text = factsModel.description?: ""
+            ImageUtils.setFactsImage(
                 factsModel.imageHref,
-                imgPopularMovie,
+                binding.imgFacts,
                 context
-            )}
+            )
         }
     }
 }
